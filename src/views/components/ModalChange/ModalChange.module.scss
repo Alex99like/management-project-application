@@ -1,28 +1,29 @@
+@import "../../../style/variables";
+@import "../../../style/abstracts";
+
 .container {
-  display: flex;
   position: fixed;
+
+  @include flex(row, flex-end, flex-start);
+
   width: 100%;
   height: 100%;
   background-color: transparent;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
   z-index: 100000;
 
   .modal {
     position: relative;
-    display: flex;
     flex-direction: column;
-    right: 70px;
-    background-color: white;
+    right: 63px;
+    background-color: $secondary-bg-color;
     display: flex;
-    padding: 15px 30px;
+    padding: 15px 20px 20px;
     border-radius: 20px;
     width: 230px;
-    font-size: 14px;
+    font-size: 16px;
     text-align: center;
-    box-shadow: 0 0 3px dimgray;
-    animation: .4s modal normal;
+    box-shadow: rgb(0 0 0 / 24%) 0 3px 8px;
+    animation: 0.4s modal normal;
 
     @keyframes modal {
       0% {
@@ -35,9 +36,9 @@
     }
 
     .title {
-      font-weight: 700;
-      color: whitesmoke;
-      text-shadow: 0 0 2px blue;
+      font-weight: 600;
+      color: $contrast-color;
+      font-family: "Hind Vadodara", sans-serif;
     }
 
     .spanContainer {
@@ -55,75 +56,75 @@
         width: 12px;
         height: 12px;
         border-radius: 50%;
-        background-color: yellow;
+        background-color: $pale-red-color;
       }
 
       .spanOne {
-        animation: .5s linear .5s infinite alternate spanMig;
+        animation: 0.5s linear 0.5s infinite alternate span-mig;
 
-        @keyframes spanMig {
+        @keyframes span-mig {
           0% {
-            box-shadow: none
+            box-shadow: none;
           }
 
           100% {
-            box-shadow: 0 0 8px yellow;
+            box-shadow: 0 0 8px $pale-red-color;
           }
         }
       }
 
       .spanTwo {
-        animation: .6s linear .6s infinite alternate spanMig;
+        animation: 0.6s linear 0.6s infinite alternate span-mig;
 
-        @keyframes spanMig {
+        @keyframes span-mig {
           0% {
-            box-shadow: none
+            box-shadow: none;
           }
 
           100% {
-            box-shadow: 0 0 8px yellow;
+            box-shadow: 0 0 8px $pale-red-color;
           }
         }
       }
 
       .spanTree {
-        animation: .7s linear .7s infinite alternate spanMig;
+        animation: 0.7s linear 0.7s infinite alternate span-mig;
 
-        @keyframes spanMig {
+        @keyframes span-mig {
           0% {
-            box-shadow: none
+            box-shadow: none;
           }
 
           100% {
-            box-shadow: 0 0 8px yellow;
+            box-shadow: 0 0 8px $pale-red-color;
           }
         }
       }
 
       .spanFour {
-        animation: .8s linear .8s infinite alternate spanMig;
+        animation: 0.8s linear 0.8s infinite alternate span-mig;
 
-        @keyframes spanMig {
+        @keyframes span-mig {
           0% {
-            box-shadow: none
+            box-shadow: none;
           }
 
           100% {
-            box-shadow: 0 0 8px yellow;
+            box-shadow: 0 0 8px $pale-red-color;
           }
         }
       }
 
       .spanFive {
-        animation: .9s linear .9s infinite alternate spanMig;
+        animation: 0.9s linear 0.9s infinite alternate span-mig;
 
-        @keyframes spanMig {
+        @keyframes span-mig {
           0% {
-            box-shadow: none
+            box-shadow: none;
           }
 
           100% {
-            box-shadow: 0 0 8px yellow;
+            box-shadow: 0 0 8px $pale-red-color;
           }
         }
       }

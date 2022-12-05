@@ -10,7 +10,7 @@ export const ModalChange = () => {
       <div className={styles.modal}>
         <h3 className={styles.title}>
           {lang === 'ru'
-            ? 'Пдождите пока идет обновление !!!'
+            ? 'Пoдождите пока идет обновление !!!'
             : 'Wait until the update is underway !!!'}
         </h3>
         <div className={styles.spanContainer}>

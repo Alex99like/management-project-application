@@ -5,7 +5,6 @@ import { useState } from 'react';
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 import { Draggable } from 'react-beautiful-dnd';
 import { ITask, IUpdateTask } from '../../../types/tasks.type';
-import { useTranslation } from 'react-i18next';
 import { t } from 'i18next';
 
 interface IPropsTask {
