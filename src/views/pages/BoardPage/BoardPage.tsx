@@ -3,56 +3,51 @@ import AddButton from '../../components/AddButton/AddButton';
 import arrow from '../../../assets/icons/icon-arrow-right.svg';
 import Column from '../../components/Column/Column';
 import styles from './BoardPage.module.scss';
-import {
-  useCreateColumnMutation,
-  useGetColumnsQuery,
-  useUpdateColumnMutation,
-} from '../../../services/Column.service';
-import { useGetBoardsQuery } from '../../../services/Board.service';
-import { useAppSelector, useRootState } from '../../../store/store';
+import { useCreateColumnMutation, useUpdateColumnMutation } from '../../../services/Column.service';
+import { useGetBoardByIdQuery, useGetBoardsQuery } from '../../../services/Board.service';
+import { useAppSelector } from '../../../store/store';
 import Lottie from 'lottie-react';
 import Loader from '../../../assets/animation/page-loader.json';
 import cn from 'classnames';
 import { FormColumn } from '../../components/FormColumn/FormColumn';
 import { useFormColumn } from '../../components/FormColumn/useFormColumn';
 import { useEffect, useState } from 'react';
-import { IColumn, IColumnReq } from '../../../types/column.type';
+import { IColumnReq } from '../../../types/column.type';
 import { toastr } from 'react-redux-toastr';
 import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
-import {
-  useCreateTaskMutation,
-  useDeleteTaskMutation,
-  useUpdateTaskMutation,
-} from '../../../services/Task.service';
-import { ITask } from '../../../types/tasks.type';
+import { useUpdateTaskMutation } from '../../../services/Task.service';
 import LoaderPlane from '../../../assets/animation/paperplane.json';
 import { useActions } from '../../../hooks/useAction';
 import { useTranslation } from 'react-i18next';
+import { TestColumns } from '../../../types/allTypes';
 
 function BoardPage() {
   const boardId = useAppSelector((state) => state.root.boardId);
   const userId = useAppSelector((state) => state.auth.user.id);
   const isLightTheme = useAppSelector((state) => state.root.isLightTheme);
   const { t } = useTranslation();
-  const [newData, setNewData] = useState<IColumn[] | undefined>([]);
+  const [newData, setNewData] = useState<TestColumns[] | undefined>([]);
 
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
 
-  const { data, isLoading } = useGetColumnsQuery({ boardId });
+  const [createLoading, setCreateLoading] = useState(false);
+
+  const { data, isLoading } = useGetBoardByIdQuery(boardId);
+
   const { data: boardData } = useGetBoardsQuery();
   const { activeModal, column, closeModal, callCreate } = useFormColumn();
 
-  const [create, { isSuccess, data: dataItem, isLoading: isLoadingCreate }] =
+  const [create, { isSuccess, data: dataItem, isLoading: isCreateLoading }] =
     useCreateColumnMutation();
 
-  const [update, { isLoading: isLoadingUpdate }] = useUpdateColumnMutation();
-  const [updateTask, { isLoading: isLoadingTaskUpdate }] = useUpdateTaskMutation();
-  const [createTask, { isLoading: isLoadingTaskCreate }] = useCreateTaskMutation();
-  const [deleteTask, { isLoading: isLoadingTaskDelete }] = useDeleteTaskMutation();
+  const [update] = useUpdateColumnMutation();
+  const [updateTask] = useUpdateTaskMutation();
 
-  const state = useRootState();
-  const dataSort = newData && [...newData];
   const { setData } = useActions();
+
+  useEffect(() => {
+    setCreateLoading(isCreateLoading);
+  }, [isCreateLoading, isSuccess]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -66,44 +61,13 @@ function BoardPage() {
   }, [dataItem, isSuccess]);
 
   useEffect(() => {
-    if (isLoading) setLoading(true);
-    else setLoading(false);
-  }, [isLoading, data]);
-
-  useEffect(() => {
-    if (
-      isLoadingCreate ||
-      isLoadingUpdate ||
-      isLoadingTaskUpdate ||
-      isLoadingTaskCreate ||
-      isLoadingTaskDelete
-    )
-      setLoading(true);
-    if (
-      !isLoadingCreate &&
-      !isLoadingUpdate &&
-      !isLoadingTaskUpdate &&
-      !isLoadingTaskCreate &&
-      !isLoadingTaskDelete
-    )
-      setLoading(false);
-  }, [
-    isLoadingCreate,
-    isLoadingUpdate,
-    isLoadingTaskUpdate,
-    isLoadingTaskDelete,
-    isLoadingTaskCreate,
-  ]);
-
-  useEffect(() => {
     if (data) {
-      setData(data);
+      setData(data.columns);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+  }, [data, setData]);
 
   useEffect(() => {
-    setNewData(data ? [...data] : undefined);
+    data && setNewData(data.columns);
   }, [data]);
 
   const handleCreateColumn = (data: IColumnReq) => {
@@ -120,46 +84,65 @@ function BoardPage() {
       return;
     }
 
-    if (type === 'column' && data) {
-      const columnToChange = data.find((columnData) => columnData.id === draggableId);
-      if (newData && columnToChange) {
-        const arr = newData.filter((columnData) => columnData.id !== draggableId);
+    if (type === 'column' && newData) {
+      const newDataArr = [...newData].sort((a, b) => a.order - b.order);
+      const columnToChange = newDataArr.find((columnData) => columnData.id === draggableId);
+      const arr = newDataArr.filter((columnData) => columnData.id !== draggableId);
 
-        arr.sort((a, b) => a.order - b.order);
-        const filterData = arr.filter((el) => el.id !== draggableId);
-        filterData.splice(destination.index, 0, {
-          ...columnToChange,
-          order: destination.index + 1,
-        });
+      arr.sort((a, b) => a.order - b.order);
+      const filterData = arr.filter((el) => el.id !== draggableId);
+      filterData.splice(destination.index, 0, {
+        ...columnToChange!,
+        order: destination.index + 1,
+      });
 
-        const sortData = filterData.map((el, i) => {
-          if (el.id !== draggableId) return { ...el, order: i + 1 };
-          else return el;
-        });
-        setNewData(sortData);
-      }
-      columnToChange &&
-        update({
-          column: { order: destination.index + 1, title: columnToChange.title },
-          boardId,
-          columnsId: draggableId,
-        });
+      const sortData = filterData.map((el, i) => {
+        if (el.id !== draggableId) return { ...el, order: i + 1 };
+        else return el;
+      });
+      setNewData(sortData);
+
+      await update({
+        column: { order: destination.index + 1, title: columnToChange!.title },
+        boardId: boardId!,
+        columnsId: columnToChange!.id,
+      });
+
       return;
     }
 
-    const start = data?.find((column) => column.id === source.droppableId);
-    const finish = data?.find((column) => column.id === destination.droppableId);
+    const start = newData!.find((column) => column.id === source.droppableId);
+    const finish = newData!.find((column) => column.id === destination.droppableId);
 
     if (start === finish && start) {
-      const column = state.initialData.columns[start.id as keyof typeof state.initialData.columns];
+      const column = newData!.find((column) => column.id === start.id);
       if (column && newData) {
-        const newTaskOrder: Record<string, string>[] = Array.from(
-          column.order as Record<string, string>[]
-        );
-        newTaskOrder.sort((a, b) => +a.order - +b.order);
+        const newTaskOrder = Array.from(column.tasks);
+        newTaskOrder.sort((a, b) => a.order - b.order);
         const actualTask = newTaskOrder[source.index];
-        updateTask({
+
+        const newTasksArray = newTaskOrder.filter((task) => task.id !== actualTask.id);
+        newTasksArray.splice(destination.index, 0, actualTask);
+
+        const newColumn = {
+          id: start.id,
+          title: start.title,
+          order: start.order,
+          tasks: newTasksArray.map((task, index) => {
+            return { ...task, order: index + 1 };
+          }),
+        };
+
+        const columnIndex = newData!.findIndex((column) => column.id === start.id);
+        const finalColumns = [...newData];
+        finalColumns.splice(columnIndex, 1, newColumn);
+
+        setNewData(finalColumns);
+
+        await updateTask({
           taskId: actualTask.id,
+          boardId,
+          columnId: start.id,
           task: {
             boardId,
             order: destination.index + 1,
@@ -173,45 +156,59 @@ function BoardPage() {
       }
     } else {
       if (start && finish) {
-        const startColumn =
-          state.initialData.columns[start.id as keyof typeof state.initialData.columns];
-        const finishColumn =
-          state.initialData.columns[finish.id as keyof typeof state.initialData.columns];
-        if (startColumn && finishColumn) {
-          const startTaskOrder = Array.from(startColumn.order as Record<string, string>[]);
-          startTaskOrder.sort((a, b) => +a.order - +b.order);
-          const actualTask = { ...startTaskOrder[source.index] };
-          const finishTaskOrder = Array.from(finishColumn.order as Record<string, string>[]);
-          finishTaskOrder.sort((a, b) => +a.order - +b.order);
+        const startColumn = newData!.find((column) => column.id === start.id);
+        const finishColumn = newData!.find((column) => column.id === finish.id);
 
-          deleteTask({
-            boardId,
-            columnsId: start.id,
+        if (startColumn && finishColumn) {
+          const startTaskOrder = Array.from(startColumn.tasks);
+          startTaskOrder.sort((a, b) => a.order - b.order);
+          const actualTask = startTaskOrder[source.index];
+
+          const finishTaskOrder = Array.from(finishColumn.tasks);
+          finishTaskOrder.sort((a, b) => a.order - b.order);
+
+          startTaskOrder.splice(source.index, 1);
+          finishTaskOrder.splice(destination.index, 0, actualTask);
+
+          const newStartColumn = {
+            id: start.id,
+            title: start.title,
+            order: start.order,
+            tasks: startTaskOrder.map((task, index) => {
+              return { ...task, order: index + 1 };
+            }),
+          };
+
+          const newFinishColumn = {
+            id: finish.id,
+            title: finish.title,
+            order: finish.order,
+            tasks: finishTaskOrder.map((task, index) => {
+              return { ...task, order: index + 1 };
+            }),
+          };
+
+          const startColumnIndex = newData!.findIndex((column) => column.id === startColumn.id);
+          const finishColumnIndex = newData!.findIndex((column) => column.id === finishColumn.id);
+          const finalColumns = [...newData!];
+          finalColumns.splice(startColumnIndex, 1, newStartColumn);
+          finalColumns.splice(finishColumnIndex, 1, newFinishColumn);
+
+          setNewData(finalColumns);
+
+          await updateTask({
             taskId: actualTask.id,
-          });
-          const createdTask = await createTask({
             boardId,
-            columnsId: finish.id,
+            columnId: source.droppableId,
             task: {
+              boardId,
+              order: destination.index + 1,
+              columnId: destination.droppableId,
               title: actualTask.title,
               description: actualTask.description,
               userId,
             },
           });
-          actualTask.id = (createdTask as { data: ITask }).data.id;
-          if (actualTask.id) {
-            updateTask({
-              taskId: actualTask.id,
-              task: {
-                boardId,
-                order: destination.index + 1,
-                columnId: finish.id,
-                title: actualTask.title,
-                description: actualTask.description,
-                userId,
-              },
-            });
-          }
         }
       }
     }
@@ -220,6 +217,7 @@ function BoardPage() {
   return (
     <div className={`${styles.boardPage} ${isLightTheme ? styles.lightTheme : styles.darkTheme}`}>
       <div className={styles.wrapper}>
+        {}
         {isLoading ? (
           <Lottie
             className={cn(styles.loader, { [styles.active]: isLoading })}
@@ -236,7 +234,7 @@ function BoardPage() {
                 column={column}
                 activeModal={activeModal}
                 close={closeModal}
-                loading={loading}
+                loading={createLoading}
               />
             )}
             <div className={styles.topPanel}>
@@ -257,8 +255,8 @@ function BoardPage() {
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                     >
-                      {dataSort &&
-                        dataSort
+                      {newData &&
+                        [...newData]
                           .sort((a, b) => a.order - b.order)
                           .map((column, index) => {
                             return (
@@ -268,6 +266,8 @@ function BoardPage() {
                                 title={column.title}
                                 index={index}
                                 order={column.order}
+                                data={column.tasks}
+                                boardId={boardId}
                               />
                             );
                           })}

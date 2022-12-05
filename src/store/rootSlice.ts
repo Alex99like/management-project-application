@@ -42,8 +42,8 @@ export const rootSlice = createSlice({
           [payload.id as keyof typeof payload]: {
             id: payload.id,
             title: payload.title,
-            order: payload.tasks,
-            columnOrder: payload.order,
+            order: payload.order,
+            tasks: payload.tasks,
           },
         },
       };

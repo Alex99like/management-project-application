@@ -5,7 +5,7 @@ export const columnApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getColumns: builder.query<IColumn[], { boardId: string }>({
       query: ({ boardId }) => `boards/${boardId}/columns`,
-      providesTags: () => [{ type: 'Columns' }],
+      providesTags: () => [{ type: 'Boards' }],
     }),
     createColumn: builder.mutation<IColumn, { column: IColumnReq; boardId: string }>({
       query: ({ boardId, column }) => ({
@@ -13,7 +13,7 @@ export const columnApi = api.injectEndpoints({
         method: 'POST',
         body: column,
       }),
-      invalidatesTags: () => [{ type: 'Columns' }],
+      invalidatesTags: () => [{ type: 'Boards' }],
     }),
     updateColumn: builder.mutation<
       IColumn,
@@ -24,14 +24,14 @@ export const columnApi = api.injectEndpoints({
         method: 'PUT',
         body: column,
       }),
-      invalidatesTags: () => [{ type: 'Columns' }],
+      invalidatesTags: () => [{ type: 'Boards' }],
     }),
     deleteColumn: builder.mutation<void, { boardId: string; columnsId: string }>({
       query: ({ columnsId, boardId }) => ({
         url: `boards/${boardId}/columns/${columnsId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: () => [{ type: 'Columns' }],
+      invalidatesTags: () => [{ type: 'Boards' }],
     }),
   }),
 });

@@ -1,3 +1,4 @@
+import { TestBoard } from '../types/allTypes';
 import { IBoard, IBoardReq } from '../types/board.type';
 import { api } from './Api.service';
 
@@ -5,6 +6,10 @@ export const boardApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getBoards: builder.query<IBoard[], void>({
       query: () => 'boards',
+      providesTags: () => [{ type: 'Boards' }],
+    }),
+    getBoardById: builder.query<TestBoard, string>({
+      query: (boardId) => ({ url: `boards/${boardId}` }),
       providesTags: () => [{ type: 'Boards' }],
     }),
     createBoard: builder.mutation<IBoard, IBoardReq>({
@@ -34,6 +39,7 @@ export const boardApi = api.injectEndpoints({
 });
 
 export const {
+  useGetBoardByIdQuery,
   useGetBoardsQuery,
   useCreateBoardMutation,
   useUpdateBoardMutation,

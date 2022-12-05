@@ -4,32 +4,31 @@ import AddButton from '../AddButton/AddButton';
 import { useEffect, useState } from 'react';
 import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 import { useFormTask } from '../FormTask/useFormTask';
-import {
-  useCreateTaskMutation,
-  useGetTasksQuery,
-  useUpdateTaskMutation,
-} from '../../../services/Task.service';
+import { useCreateTaskMutation, useUpdateTaskMutation } from '../../../services/Task.service';
 import { useAppSelector } from '../../../store/store';
 import Task from '../Task/Task';
 import { toastr } from 'react-redux-toastr';
 import { FormTask, IFormTask } from '../FormTask/FormTask';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
-import { useActions } from '../../../hooks/useAction';
 import EditInput from './EditInput';
 import { useTranslation } from 'react-i18next';
-import { ITasks } from '../../../types/tasks.type';
+import { TestTasks } from '../../../types/allTypes';
 
-function Column(props: { title: string; id: string; index: number; order: number }) {
+function Column(props: {
+  title: string;
+  id: string;
+  index: number;
+  order: number;
+  data: TestTasks[];
+  boardId: string;
+}) {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
   const [isEdit, setEdit] = useState<boolean>(false);
   const boardId = useAppSelector((state) => state.root.boardId);
   const userId = useAppSelector((state) => state.auth.user.id);
   const { activeModal, task, closeModal, type, callCreate, callUpdate } = useFormTask();
-  const { data } = useGetTasksQuery({ boardId, columnsId: props.id });
   const { t } = useTranslation();
-
-  const [columnTasks, setColumnTasks] = useState<ITasks | undefined>(undefined);
 
   const [create, { isSuccess, data: dataItem, isLoading: isLoadingCreate }] =
     useCreateTaskMutation();
@@ -37,20 +36,7 @@ function Column(props: { title: string; id: string; index: number; order: number
   const [update, { isSuccess: isSuccessUpdate, data: dataItemUpdate, isLoading: isLoadingUpdate }] =
     useUpdateTaskMutation();
 
-  const { setData } = useActions();
-  // const dataTasksSort = columnTasks && [...columnTasks.tasks];
-  const dataTasksSort = columnTasks && [...columnTasks.tasks];
-
-  useEffect(() => {
-    if (data) {
-      setData(data);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
-
-  useEffect(() => {
-    setColumnTasks(data ? { ...data } : undefined);
-  }, [data]);
+  const { data } = props;
 
   useEffect(() => {
     if (isSuccess) {
@@ -98,6 +84,8 @@ function Column(props: { title: string; id: string; index: number; order: number
           columnId: props.id,
         },
         taskId: task?.taskId as string,
+        boardId: props.boardId,
+        columnId: props.id,
       });
   };
 
@@ -147,13 +135,13 @@ function Column(props: { title: string; id: string; index: number; order: number
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
-                  {dataTasksSort && dataTasksSort?.length !== 0 ? (
-                    dataTasksSort
+                  {data && data.length !== 0 ? (
+                    [...data]
                       .sort((a, b) => a.order - b.order)
                       .map((task, index) => (
                         <Task
                           key={task.id}
-                          task={task}
+                          task={{ ...task, boardId: props.boardId, columnId: props.id }}
                           columnsId={props.id}
                           index={index}
                           callUpdate={callUpdate}
