@@ -20,6 +20,7 @@ import LoaderPlane from '../../../assets/animation/paperplane.json';
 import { useActions } from '../../../hooks/useAction';
 import { useTranslation } from 'react-i18next';
 import { TestColumns } from '../../../types/allTypes';
+import { ModalChange } from '../../components/ModalChange/ModalChange';
 
 function BoardPage() {
   const boardId = useAppSelector((state) => state.root.boardId);
@@ -40,8 +41,20 @@ function BoardPage() {
   const [create, { isSuccess, data: dataItem, isLoading: isCreateLoading }] =
     useCreateColumnMutation();
 
-  const [update] = useUpdateColumnMutation();
-  const [updateTask] = useUpdateTaskMutation();
+  const [update, { isLoading: isLoadingColumn, isSuccess: isSuccessColumn }] =
+    useUpdateColumnMutation();
+  const [updateTask, { isLoading: isLoadingTask, isSuccess: isSuccessTask }] =
+    useUpdateTaskMutation();
+
+  const [dragLoading, setDragLoading] = useState(false);
+
+  useEffect(() => {
+    setDragLoading(isLoadingColumn);
+  }, [isLoadingColumn, isSuccessColumn]);
+
+  useEffect(() => {
+    setDragLoading(isLoadingTask);
+  }, [isLoadingTask, isSuccessTask]);
 
   const { setData } = useActions();
 
@@ -217,7 +230,7 @@ function BoardPage() {
   return (
     <div className={`${styles.boardPage} ${isLightTheme ? styles.lightTheme : styles.darkTheme}`}>
       <div className={styles.wrapper}>
-        {}
+        {dragLoading && <ModalChange />}
         {isLoading ? (
           <Lottie
             className={cn(styles.loader, { [styles.active]: isLoading })}
