@@ -1,0 +1,123 @@
+@import "../../../style/variables";
+@import "../../../style/abstracts";
+
+.loader {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+  height: calc(100% - 145px);
+  width: 100%;
+  transform: scale(1.7);
+
+  @media (max-width: 600px) {
+    height: calc(100% - 216px);
+  }
+}
+
+.lightWrapper {
+  background: $primary-bg-color;
+}
+
+.darkWrapper {
+  background: $dark-bg-color;
+}
+
+.wrapper {
+  animation: 0.7s opacity;
+  transition:
+    background-color 0.7s ease-in-out,
+    color 0.7s ease-in-out;
+
+  @keyframes opacity {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .main {
+    width: 1210px;
+    min-height: calc(100vh - 145px);
+    margin: 0 auto;
+
+    @media (max-width: 1280px) {
+      width: 900px;
+    }
+
+    @media (max-width: 950px) {
+      width: 590px;
+    }
+
+    @media (max-width: 650px) {
+      width: 280px;
+    }
+
+    @media (max-width: 600px) {
+      min-height: calc(100vh - 216px);
+    }
+
+    h3 {
+      font-size: 30px;
+      padding-top: 20px;
+      transition: color 0.7s ease-in-out;
+    }
+
+    .boards {
+      @include flex(row, flex-start, flex-start);
+
+      flex-wrap: wrap;
+      gap: 30px;
+      padding: 20px 0;
+
+      .newBoard {
+        width: 280px;
+        height: 100px;
+        border-radius: 15px;
+        box-shadow: rgb(0 0 0 / 24%) 0 3px 8px;
+        transition: box-shadow 0.5s;
+        cursor: pointer;
+        padding: 5px;
+        background-color: $secondary-bg-color;
+
+        &:hover {
+          box-shadow: rgb(0 0 0 / 16%) 0 10px 36px 0, rgb(0 0 0 / 6%) 0 0 0 1px;
+        }
+
+        .dashed {
+          border: 3px dashed $gray-color;
+
+          @include flex(column, center, center);
+
+          border-radius: 13px;
+          padding: 8px;
+
+          .title {
+            font-size: 18px;
+            font-weight: 500;
+            color: $gray-color;
+            padding: 0;
+          }
+
+          .add {
+            padding: 5px;
+            margin-top: 5px;
+
+            @include flex(row, center, center);
+
+            border-radius: 50%;
+            border: 3px dashed $gray-color;
+
+            svg {
+              color: $gray-color;
+              font-size: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

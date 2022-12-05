@@ -1,0 +1,82 @@
+@import "../../../style/variables";
+@import "../../../style/abstracts";
+
+.notFound {
+  @include flex(column, center, center);
+
+  min-height: calc(100vh - 145px);
+  padding-bottom: 15px;
+  background: $primary-bg-color;
+  animation: 0.7s opacity;
+
+  @keyframes opacity {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 600px) {
+    min-height: calc(100vh - 216px);
+  }
+
+  .title {
+    margin-bottom: 45px;
+
+    @media (max-width: 530px) {
+      max-width: 280px;
+      text-align: center;
+    }
+  }
+
+  .error {
+    @include flex(row, space-around, stretch);
+
+    width: 100%;
+    font-size: 85px;
+
+    p {
+      margin: 15px 25px;
+
+      @include flex(row, flex-start, center);
+
+      @media (max-width: 1110px) {
+        margin: 15px;
+      }
+    }
+
+    .first {
+      filter: blur(1.5px);
+      font-size: 60px;
+
+      @media (max-width: 500px) {
+        display: none;
+      }
+    }
+
+    .second {
+      filter: blur(3px);
+      font-size: 50px;
+
+      @media (max-width: 750px) {
+        display: none;
+      }
+    }
+
+    .last {
+      filter: blur(4.5px);
+      font-size: 42px;
+
+      @media (max-width: 950px) {
+        display: none;
+      }
+    }
+
+    .basic {
+      text-shadow: 3px 2px 2px $pale-text-color;
+    }
+  }
+}

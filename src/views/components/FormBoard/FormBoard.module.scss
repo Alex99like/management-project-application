@@ -1,0 +1,150 @@
+@import "../../../style/abstracts";
+@import "../../../style/variables";
+
+.background {
+  @include flex(row, center, flex-start);
+
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background: $transparent-bg-color;
+
+  .loader {
+    background: $transparent-bg-color;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    animation: loader;
+    animation-duration: 0.5s;
+  }
+
+  @keyframes loader {
+    0% {
+      background: transparent;
+      transform: scale(0.1) rotate(-360deg);
+    }
+
+    50% {
+      background: transparent;
+      transform: scale(1) rotate(0deg);
+    }
+
+    100% {
+      background: $transparent-bg-color;
+    }
+  }
+
+  .form {
+    margin-top: calc(50vh - 120px);
+    background-color: $secondary-bg-color;
+
+    @include flex(column, flex-start, flex-start);
+
+    padding: 30px;
+    gap: 15px;
+    border-radius: 30px;
+    outline: none;
+    animation: animate-modal;
+    transform: scale(1.2);
+    animation-duration: 0.7s;
+
+    @media (max-width: 400px) {
+      padding: 20px 15px 15px;
+    }
+
+    @keyframes animate-modal {
+      0% {
+        transform: translateY(-300px) scale(0.01);
+      }
+
+      50% {
+        transform: translateY(50px) scale(0.8);
+      }
+
+      100% {
+        transform: translateY(0) scale(1.2);
+      }
+    }
+
+    .userName {
+      color: $pale-text-color;
+      width: 240px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      @media (max-width: 400px) {
+        width: 200px;
+      }
+
+      span {
+        color: $contrast-color;
+      }
+    }
+
+    .title {
+      box-shadow: 0 0 2px $transparent-bg-color;
+      max-width: 240px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 20px;
+      padding: 3px 10px;
+      border-radius: 10px;
+      color: $transparent-bg-color;
+
+      @media (max-width: 400px) {
+        max-width: 200px;
+      }
+    }
+
+    .btnContainer {
+      width: 100%;
+
+      @include flex(row, center, stretch);
+
+      gap: 10px;
+
+      .btn {
+        min-width: 80px;
+        padding: 0 5px;
+        border-radius: 10px;
+        font-size: 20px;
+        font-weight: 600;
+        color: $secondary-bg-color;
+        transition: 0.5s;
+
+        &.create {
+          background-color: $contrast-color;
+          box-shadow: 0 10px 20px -4px $contrast-color;
+
+          &:hover {
+            box-shadow: 0 0 4px $contrast-color;
+            background-color: $secondary-bg-color;
+            text-shadow: 0 0 2px $contrast-color;
+          }
+
+          &:disabled {
+            box-shadow: none;
+            text-shadow: none;
+            color: $secondary-bg-color;
+            background: $gray-color;
+          }
+        }
+
+        &.cancel {
+          background-color: $red-color;
+          box-shadow: 0 10px 20px -4px $red-color;
+
+          &:hover {
+            box-shadow: 0 0 4px $red-color;
+            background-color: $secondary-bg-color;
+            text-shadow: 0 0 2px $red-color;
+          }
+        }
+      }
+    }
+  }
+}

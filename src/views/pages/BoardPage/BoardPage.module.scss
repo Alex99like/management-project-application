@@ -1,0 +1,130 @@
+@import "../../../style/variables";
+@import "../../../style/abstracts";
+
+.loader {
+  position: fixed;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  height: calc(100% - 145px);
+  width: 100%;
+  transform: scale(1.7);
+
+  @media (max-width: 600px) {
+    height: calc(100% - 216px);
+  }
+}
+
+.boardPage {
+  transition:
+    background-color 0.7s ease-in-out,
+    color 0.7s ease-in-out;
+  animation: 0.7s opacity;
+
+  @keyframes opacity {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+.lightTheme {
+  background-color: $primary-bg-color;
+}
+
+.darkTheme {
+  background-color: $dark-bg-color;
+}
+
+.wrapper {
+  padding: 15px 30px;
+  min-height: calc(100vh - 145px);
+  overflow-y: hidden;
+
+  @media (max-width: 600px) {
+    min-height: calc(100vh - 216px);
+  }
+
+  @media (max-width: 400px) {
+    padding: 15px 20px;
+  }
+
+  .topPanel {
+    @include flex(row, flex-start, center);
+
+    gap: 30px;
+
+    h3 {
+      font-size: 22px;
+      transition: color 0.7s ease-in-out;
+    }
+
+    .button {
+      background-color: $contrast-color;
+      color: $light-text-color;
+      padding: 10px;
+
+      @include flex(row, center, center);
+
+      gap: 5px;
+      border-radius: 24px;
+      box-shadow: 0 10px 20px -10px $contrast-color;
+      transition: box-shadow 0.5s;
+
+      .arrow {
+        transition: all 0.5s;
+        transform: rotate(180deg);
+        filter: brightness(0) saturate(100%) invert(99%) saturate(7500%) hue-rotate(241deg) brightness(101%) contrast(102%);
+      }
+
+      &:hover {
+        box-shadow: 0 10px 30px -10px $contrast-color;
+
+        &:hover .arrow {
+          transform: translateX(-3px) rotate(180deg);
+        }
+      }
+    }
+  }
+
+  .board {
+    @include flex(row, flex-start, flex-start);
+
+    margin: 15px 0;
+  }
+
+  .boardContainer {
+    display: flex;
+  }
+}
+
+.wrapper::-webkit-scrollbar {
+  height: 10px;
+}
+
+.wrapper::-webkit-scrollbar-thumb {
+  background-color: $secondary-bg-color;
+  box-shadow: inset 1px 1px 10px $contrast-color;
+}
+
+.wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: $secondary-bg-color;
+}
+
+.loaderPlane {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  z-index: 100;
+}

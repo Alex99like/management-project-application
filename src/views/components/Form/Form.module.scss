@@ -1,0 +1,131 @@
+@import "../../../style/abstracts";
+@import "../../../style/variables";
+
+.backgroundLight {
+  background-image: url("../../../assets/images/background-form-light.png");
+}
+
+.backgroundDark {
+  background-image: url("../../../assets/images/background-form.png");
+}
+
+.background {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 145px);
+  z-index: 100;
+  overflow: hidden;
+
+  @include flex(column, center, center);
+
+  background-size: cover;
+  opacity: 0;
+  transition: 1s;
+  animation: 0.7s opacity;
+
+  @media (max-width: 600px) {
+    min-height: calc(100vh - 216px);
+  }
+
+  @keyframes opacity {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .loader {
+    transition: 0.7s;
+    position: absolute;
+    z-index: 100;
+    transform: scale(0.7);
+    animation: slide 1s;
+  }
+
+  @keyframes slide {
+    from {
+      transform: scale(0.01);
+    }
+
+    to {
+      transform: scale(0.7);
+    }
+  }
+
+  &.active {
+    opacity: 1;
+  }
+
+  .form {
+    background-color: $secondary-bg-color;
+    padding: 30px 30px 20px;
+    margin-bottom: 50px;
+    border-radius: 40px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transform: scale(0.01) translate(-500px, -500px);
+    transition: 0.3s;
+
+    @media (max-width: 400px) {
+      padding: 20px 15px 15px;
+    }
+
+    &.active {
+      transform: scale(1.2);
+    }
+
+    &.switcherUp {
+      transform: scale(0.001) translateX(1200px);
+    }
+
+    &.switcherDown {
+      transform: scale(0.001) translateX(-1200px);
+    }
+
+    .container-btn {
+      @include flex(row, space-around, stretch);
+
+      margin-top: 10px;
+
+      @media (max-width: 400px) {
+        margin-top: 0;
+      }
+
+      .btn {
+        font-size: 20px;
+        width: 100px;
+        padding: 3px 0;
+        border-radius: 10px;
+        background-color: $secondary-bg-color;
+        box-shadow: 0 0 3px $contrast-color;
+        font-weight: 600;
+        color: $contrast-color;
+        transition: 0.6s;
+
+        @media (max-width: 400px) {
+          width: 80px;
+        }
+
+        &:disabled {
+          background-color: $dark-bg-color !important;
+          transform: scale(1) !important;
+          box-shadow: none;
+          color: $light-text-color;
+          cursor: no-drop;
+        }
+
+        &:hover {
+          background-color: $contrast-color;
+          color: $light-text-color;
+          box-shadow: none;
+          transform: scale(1.1);
+        }
+      }
+    }
+  }
+}

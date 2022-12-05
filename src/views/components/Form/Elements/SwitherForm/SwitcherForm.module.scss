@@ -1,0 +1,56 @@
+@import "../../../../../style/abstracts";
+@import "../../../../../style/variables";
+
+.container {
+  width: 250px;
+  display: flex;
+  position: absolute;
+  margin-top: 10px;
+  bottom: -45px;
+
+  @media (max-width: 400px) {
+    width: 200px;
+  }
+
+  .btn {
+    width: 50%;
+    background-color: $secondary-bg-color;
+    font-size: 24px;
+    font-weight: 600;
+    transition: 0.3s;
+
+    @media (max-width: 400px) {
+      font-size: 22px;
+    }
+
+    &:disabled {
+      background-color: $dark-bg-color !important;
+      transform: scale(1) !important;
+      box-shadow: none;
+      color: $light-text-color;
+      cursor: no-drop;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      color: $contrast-color;
+    }
+
+    &:first-child {
+      border-bottom-left-radius: 15px;
+      border-top-left-radius: 15px;
+    }
+
+    &:last-child {
+      border-bottom-right-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+
+    &.active {
+      background-color: $contrast-color;
+      color: $light-text-color;
+      box-shadow: 0 0 3px $contrast-color;
+      z-index: 10;
+    }
+  }
+}

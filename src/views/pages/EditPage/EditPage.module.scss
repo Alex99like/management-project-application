@@ -1,0 +1,245 @@
+@import "../../../style/variables";
+@import "../../../style/abstracts";
+
+.background {
+  width: 100%;
+  position: relative;
+  min-height: calc(100vh - 145px);
+  background-color: $secondary-bg-color;
+  background-image: url("../../../assets/images/light-edit.jpg");
+  background-size: cover;
+  background-position: center;
+
+  @include flex(column, center, center);
+
+  animation: 0.7s opacity;
+
+  @media (max-width: 600px) {
+    min-height: calc(100vh - 216px);
+  }
+
+  &.bgExit {
+    background-image: url("../../../assets/images/dark-edit.jpg");
+    animation: 0.7s opacity;
+  }
+
+  @keyframes opacity {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .deleteUser {
+    position: absolute;
+    right: -160px;
+    top: -0;
+    background-color: crimson;
+    color: $light-text-color;
+    font-size: 25px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    line-height: 30px;
+    animation: 1s linear 1s infinite alternate delete-btn;
+
+    @media (max-width: 650px) {
+      right: 0;
+      top: 115px;
+      width: 80px;
+      height: 80px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    @media (max-width: 400px) {
+      left: 165px;
+      top: 190px;
+    }
+  }
+
+  @keyframes delete-btn {
+    0% {
+      box-shadow: 0 0 1px crimson;
+    }
+
+    100% {
+      box-shadow: 0 0 20px 10px crimson;
+    }
+  }
+
+  .container {
+    margin-top: 15px;
+    min-width: 320px;
+    padding: 20px;
+    background-color: $secondary-bg-color;
+    border-radius: 15px;
+
+    @media (max-width: 400px) {
+      width: 270px;
+      min-width: 270px;
+    }
+
+    .id {
+      margin-top: 20px;
+      font-size: 12px;
+      color: $dark-text-color;
+      padding: 3px 4px;
+      box-shadow: 0 0 2px #7c7b7b57;
+      border-radius: 5px;
+
+      @media (max-width: 400px) {
+        text-align: center;
+      }
+
+      span {
+        color: #7c7b7b57;
+      }
+    }
+
+    .profile {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+
+      @media (max-width: 400px) {
+        justify-content: center;
+      }
+
+      .avatar {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background-image: url("../../../assets/icons/avatar-default.png");
+        background-size: cover;
+        background-position: center;
+        border: 5px solid $gray-color;
+      }
+
+      .name {
+        position: relative;
+        margin-left: 20px;
+        font-size: 28px;
+        display: flex;
+        align-items: flex-end;
+        box-shadow: 0 2px 6px -4px rgb(105 105 105 / 63.7%);
+        padding: 0 7px;
+        border-radius: 7px;
+
+        @media (max-width: 400px) {
+          margin-left: 0;
+          margin-top: 5px;
+        }
+
+        p {
+          width: 115px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        span {
+          font-size: 20px;
+          font-weight: 800;
+          color: #7b7a7aa9;
+          margin-right: 10px;
+          padding-bottom: 1.5px;
+        }
+      }
+    }
+  }
+
+  .form {
+    margin: 15px 0;
+    padding: 5px 20px 20px;
+    background-color: $secondary-bg-color;
+    border-radius: 15px;
+
+    .fieldset {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      padding: 15px;
+      margin-top: 5px;
+      border-radius: 15px;
+      border: none;
+      box-shadow: 0 0 3px #716e6ead;
+      transition: 0.3s;
+
+      &:hover {
+        box-shadow: 0 0 3px $contrast-color;
+      }
+
+      .legend {
+        font-size: 24px;
+        padding: 0 7px;
+        font-weight: 800;
+        background: $secondary-bg-color;
+        margin-left: 7px;
+        text-shadow: 0 0 1px $dark-text-color;
+        color: #f4f9ff;
+        border-radius: 5px;
+        box-shadow: 0 0 1px dimgray;
+      }
+    }
+  }
+
+  .updateBtn {
+    margin-top: 10px;
+    width: 100%;
+    font-size: 20px;
+    font-weight: 600;
+    height: 40px;
+    border-radius: 7px;
+    background-color: $secondary-bg-color;
+    box-shadow: 0 0 4px $contrast-color;
+    color: $contrast-color;
+    animation: 2s linear 3s infinite alternate update-btn;
+  }
+
+  @keyframes update-btn {
+    0% {
+      background-color: $contrast-color;
+      color: $light-text-color;
+    }
+
+    100% {
+      background-color: $secondary-bg-color;
+      box-shadow: 0 0 4px $contrast-color;
+      color: $contrast-color;
+    }
+  }
+}
+
+.loader {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  z-index: 10000;
+  background-color: #5d5b5b37;
+  animation: 1s loader-edit;
+}
+
+@keyframes loader-edit {
+  0% {
+    background-color: transparent;
+    transform: scale(0.1);
+  }
+
+  50% {
+    background-color: transparent;
+    transform: scale(1);
+  }
+
+  100% {
+    background-color: #5d5b5b37;
+  }
+}

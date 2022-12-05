@@ -1,0 +1,147 @@
+@import "../../../style/variables";
+@import "../../../style/abstracts";
+
+.column {
+  background-color: $secondary-bg-color;
+}
+
+.draggable {
+  background-color: $light-blue;
+}
+
+.column,
+.draggable {
+  min-width: 280px;
+  max-width: 280px;
+  border-radius: 24px;
+  margin-right: 30px;
+  box-shadow: rgb(0 0 0 / 24%) 0 3px 8px;
+  transition: box-shadow 0.5s;
+  position: relative;
+  padding: 10px;
+  max-height: calc(100vh - 270px);
+  min-height: 151px;
+  overflow-y: auto;
+
+  .loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+
+    @include flex(row, center, center);
+
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: 600px) {
+    max-height: calc(100vh - 340px);
+  }
+
+  &:hover {
+    box-shadow: rgb(0 0 0 / 16%) 0 10px 36px 0, rgb(0 0 0 / 6%) 0 0 0 1px;
+  }
+
+  .tasks {
+    @include flex(column, center, stretch);
+
+    .message {
+      color: $pale-text-color;
+    }
+  }
+
+  .container {
+    @include flex(row, space-between, center);
+
+    .title {
+      width: 230px;
+      font-size: 20px;
+      font-weight: 400;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 5px;
+      border: 1px solid transparent;
+    }
+
+    .edit {
+      @include flex(row, space-between, center);
+
+      border: 1px solid $gray-color;
+      border-radius: 10px;
+      margin-right: 5px;
+      padding: 0 5px;
+      position: relative;
+      transition: all 0.5s;
+
+      .controls {
+        width: 40px;
+
+        @include flex(row, center, center);
+
+        gap: 3px;
+      }
+
+      .error {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        color: $red-color;
+        background-color: $pale-red-color;
+        font-size: 8px;
+        top: -13px;
+        right: 0;
+        padding: 0 6px;
+        border-radius: 20px;
+      }
+
+      .inputImg {
+        width: 15px;
+        transition: transform 0.3s;
+        cursor: pointer;
+        filter: saturate(100%) invert(47%) sepia(14%) saturate(2873%) hue-rotate(168deg) brightness(87%);
+
+        &:nth-child(1) {
+          width: 22px;
+        }
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    .input {
+      width: 175px;
+      border: none;
+      background-color: transparent;
+      font-size: 20px;
+      font-family: Raleway, sans-serif;
+      outline: none;
+    }
+
+    .image {
+      width: 20px;
+      box-sizing: content-box;
+      border-radius: 50%;
+      padding: 3px;
+      transition: all 0.5s;
+      cursor: pointer;
+      filter: saturate(100%) invert(47%) sepia(14%) saturate(2873%) hue-rotate(168deg) brightness(87%);
+
+      &:hover {
+        background-color: #e7f2fe49;
+      }
+    }
+  }
+
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $contrast-color;
+  }
+}

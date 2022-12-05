@@ -1,0 +1,78 @@
+@import "../../../style/variables";
+@import "../../../style/abstracts";
+
+.board {
+  width: 280px;
+  background-color: $secondary-bg-color;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: rgb(0 0 0 / 24%) 0 3px 8px;
+  transition: box-shadow 0.5s;
+  animation: 0.7s opacity;
+  cursor: pointer;
+
+  @keyframes opacity {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  &:hover {
+    box-shadow: rgb(0 0 0 / 16%) 0 10px 36px 0, rgb(0 0 0 / 6%) 0 0 0 1px;
+  }
+
+  .container {
+    @include flex(row, space-between, center);
+
+    margin-top: -5px;
+
+    div {
+      @include flex(row, center, center);
+    }
+
+    .title {
+      width: 230px;
+      font-size: 20px;
+      margin-bottom: 5px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .image {
+      width: 24px;
+    }
+
+    .image,
+    .deleteImg {
+      box-sizing: content-box;
+      border-radius: 50%;
+      padding: 3px;
+      transition: all 0.5s;
+      filter: saturate(100%) invert(47%) sepia(14%) saturate(2873%) hue-rotate(168deg) brightness(87%);
+    }
+
+    .deleteImg {
+      width: 20px;
+
+      &:hover {
+        background-color: #e7f2fe49;
+      }
+    }
+  }
+
+  .description {
+    min-height: 50px;
+    background-color: $secondary-bg-color;
+    border-radius: 10px;
+    padding: 5px;
+    word-wrap: break-word;
+    box-shadow: rgb(0 0 0 / 24%) 0 0 1px 0.8px;
+    color: $pale-text-color;
+  }
+}

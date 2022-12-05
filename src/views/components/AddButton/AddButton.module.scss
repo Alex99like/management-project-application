@@ -1,0 +1,27 @@
+@import "../../../style/variables";
+@import "../../../style/abstracts";
+
+.button {
+  width: 260px;
+  height: 35px;
+  background-color: $contrast-color;
+  color: $light-text-color;
+  border-radius: 10px;
+  text-align: center;
+  margin: 10px 0;
+  box-shadow: 0 1px 10px -5px $contrast-color;
+  transition: box-shadow 0.5s;
+
+  &[data-title="column"],
+  &[data-title="колонку"] {
+    margin: 15px 30px 15px 0;
+
+    @media (max-width: 400px) {
+      margin-right: 20px;
+    }
+  }
+
+  &:hover {
+    box-shadow: 0 1px 10px -1px $contrast-color;
+  }
+}

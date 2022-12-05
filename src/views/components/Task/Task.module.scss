@@ -1,0 +1,34 @@
+@import "../../../style/variables";
+@import "../../../style/abstracts";
+
+.task,
+.draggable {
+  background-color: $secondary-bg-color;
+  border-radius: 10px;
+  box-shadow: rgb(0 0 0 / 24%) 0 0 1px 0.8px;
+  position: relative;
+  padding: 5px;
+  margin-top: 10px;
+  width: 260px;
+
+  .image {
+    position: absolute;
+    top: 9px;
+    right: 5px;
+    width: 15px;
+    box-sizing: content-box;
+    border-radius: 50%;
+    transition: all 0.5s;
+    cursor: pointer;
+    filter: saturate(100%) invert(47%) sepia(14%) saturate(2873%) hue-rotate(168deg) brightness(87%);
+
+    &:nth-child(2) {
+      right: 25px;
+      width: 17px;
+    }
+  }
+}
+
+.draggable {
+  background-color: $light-blue;
+}

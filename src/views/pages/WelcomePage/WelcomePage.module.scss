@@ -1,0 +1,342 @@
+@import "../../../style/variables";
+@import "../../../style/abstracts";
+
+%section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 35px 30px;
+  font-size: 18px;
+
+  @media (max-width: 475px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 475px) {
+    padding: 20px;
+  }
+}
+
+.lightWrapper {
+  background: $primary-bg-color;
+  color: $dark-text-color;
+}
+
+.darkWrapper {
+  background: $dark-bg-color;
+  color: $light-text-color;
+}
+
+.wrapper {
+  animation: 0.7s opacity;
+  transition:
+    background-color 0.7s ease-in-out,
+    color 0.7s ease-in-out;
+
+  @keyframes opacity {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  h3 {
+    font-size: 26px;
+    margin-bottom: 10px;
+    color: $pale-text-color;
+    font-family: "Fira Sans", sans-serif;
+    font-weight: 200;
+
+    @media (max-width: 600px) {
+      font-size: 23px;
+    }
+  }
+
+  h2 {
+    font-size: 45px;
+    line-height: 60px;
+
+    @media (max-width: 600px) {
+      font-size: 28px;
+    }
+  }
+
+  h1 {
+    font-size: 60px;
+    line-height: 65px;
+
+    @media (max-width: 870px) {
+      font-size: 45px;
+    }
+
+    @media (max-width: 600px) {
+      font-size: 30px;
+      text-align: center;
+      line-height: 40px;
+    }
+  }
+
+  h4 {
+    font-size: 24px;
+  }
+
+  .aboutProjectSection {
+    @extend %section;
+    @include flex(column, center, center);
+
+    gap: 20px;
+
+    h3 {
+      @media (max-width: 600px) {
+        width: 280px;
+        text-align: center;
+        margin-left: calc(50% - 140px);
+      }
+    }
+
+    .info {
+      max-width: 500px;
+
+      @include flex(column, center, center);
+
+      gap: 20px;
+
+      p {
+        color: $pale-text-color;
+      }
+
+      ul {
+        align-self: flex-start;
+      }
+
+      .listItem {
+        @include flex(row, flex-start, center);
+
+        gap: 10px;
+        margin: 5px 0;
+        cursor: auto;
+
+        img {
+          filter: saturate(100%) invert(47%) sepia(14%) saturate(2873%) hue-rotate(168deg) brightness(87%);
+        }
+      }
+    }
+
+    .content {
+      @include flex(row, space-around, center);
+
+      gap: 30px;
+
+      @media (max-width: 870px) {
+        @include flex(column-reverse, center, center);
+      }
+
+      .image {
+        width: 500px;
+
+        @media (max-width: 870px) {
+          width: 400px;
+        }
+
+        @media (max-width: 475px) {
+          width: 280px;
+        }
+      }
+    }
+  }
+
+  .aboutCourseSection {
+    @extend %section;
+
+    .cards {
+      @include flex(row, center, center);
+
+      flex-wrap: wrap;
+      gap: 35px;
+      padding: 30px 0;
+
+      @media (max-width: 475px) {
+        padding: 20px 0;
+      }
+
+      .card {
+        width: 300px;
+        height: 490px;
+
+        @include flex(column, space-between, stretch);
+
+        @media (max-width: 475px) {
+          width: 280px;
+          height: 430px;
+        }
+
+        .cardImage {
+          width: 300px;
+
+          @media (max-width: 475px) {
+            width: 280px;
+          }
+        }
+
+        p {
+          color: $pale-text-color;
+        }
+
+        .link {
+          color: $contrast-color;
+
+          @include flex(row, flex-start, center);
+
+          gap: 5px;
+
+          img {
+            transition: all 0.5s;
+            filter: brightness(0) saturate(100%) invert(47%) sepia(14%) saturate(2873%) hue-rotate(168deg) brightness(87%) contrast(105%);
+          }
+
+          &:hover img {
+            transform: translateX(5px);
+          }
+        }
+      }
+    }
+  }
+
+  .aboutTeamLight {
+    background: $primary-bg-color;
+  }
+
+  .aboutTeamDark {
+    background: $dark-bg-color;
+  }
+
+  .aboutTeamWrapper {
+    transition: background-color 0.7s ease-in-out;
+
+    .aboutTeamSection {
+      @extend %section;
+
+      h3 {
+        @media (max-width: 520px) {
+          width: 280px;
+        }
+      }
+
+      .team {
+        @include flex(column, center, stretch);
+
+        gap: 30px;
+        width: 1120px;
+        margin: 10px auto 0;
+        padding: 30px;
+        padding-bottom: 20px;
+
+        @media (max-width: 1180px) {
+          width: 800px;
+        }
+
+        @media (max-width: 950px) {
+          width: 500px;
+        }
+
+        @media (max-width: 560px) {
+          width: 100%;
+          padding: 10px 0;
+        }
+
+        .teamMember {
+          gap: 30px;
+
+          .name {
+            @include flex(row, center, center);
+
+            gap: 10px;
+
+            h4 {
+              @media (max-width: 475px) {
+                width: 130px;
+                text-align: center;
+                line-height: 30px;
+                margin-bottom: 7px;
+              }
+            }
+          }
+
+          &:nth-child(1),
+          &:nth-child(3) {
+            @include flex(row, flex-start, center);
+          }
+
+          &:nth-child(2) {
+            @include flex(row-reverse, flex-start, center);
+
+            & .name {
+              @include flex(row-reverse, center, center);
+            }
+          }
+
+          @media (max-width: 950px) {
+            &:nth-child(1),
+            &:nth-child(2),
+            &:nth-child(3) {
+              @include flex(column, center, center);
+            }
+          }
+        }
+
+        .info {
+          width: 500px;
+
+          @media (max-width: 560px) {
+            width: 400px;
+          }
+
+          @media (max-width: 475px) {
+            width: 280px;
+          }
+        }
+
+        .avatar {
+          width: 250px;
+          border-radius: 50%;
+        }
+
+        .quote {
+          margin: 10px;
+
+          @media (max-width: 950px) {
+            text-align: center;
+          }
+
+          span {
+            font-weight: 700;
+            margin: 0 5px;
+          }
+        }
+
+        .heading {
+          @include flex(column, center, center);
+
+          .github {
+            width: 30px;
+            margin-top: 5px;
+            filter: saturate(100%) invert(47%) sepia(14%) saturate(2873%) hue-rotate(168deg) brightness(87%);
+            transition: all 0.5s;
+
+            &:hover {
+              transform: scale(1.1);
+            }
+          }
+
+          p {
+            color: $pale-text-color;
+            font-family: "Fira Sans", sans-serif;
+            font-weight: 200;
+          }
+        }
+      }
+    }
+  }
+}

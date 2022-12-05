@@ -1,0 +1,86 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.10.9",
+    "@mui/material": "^5.10.13",
+    "@reduxjs/toolkit": "^1.9.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/react": "^18.0.25",
+    "@types/react-beautiful-dnd": "^13.1.2",
+    "@types/react-dom": "^18.0.0",
+    "@types/react-redux-toastr": "^7.6.2",
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
+    "axios": "^1.1.3",
+    "classnames": "^2.3.2",
+    "cookies-js": "^1.2.3",
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^3.5.2",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.10",
+    "husky": "^8.0.2",
+    "i18next": "^22.0.5",
+    "lint-staged": "^13.0.3",
+    "lottie-react": "^2.3.1",
+    "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-dom": "^18.2.0",
+    "react-error-boundary": "^3.1.4",
+    "react-hook-form": "^7.39.2",
+    "react-i18next": "^12.0.0",
+    "react-icon": "^1.0.0",
+    "react-icons": "^4.6.0",
+    "react-redux": "^8.0.5",
+    "react-redux-toastr": "^7.6.10",
+    "react-router-dom": "^6.4.3",
+    "react-scripts": "5.0.1",
+    "reactjs-lottie": "^1.0.10",
+    "redux": "^4.2.0",
+    "reduxjs-toolkit-persist": "^7.2.1",
+    "sass": "^1.56.1",
+    "typescript": "^4.4.2",
+    "web-vitals": "^2.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "lint": "eslint --fix . --ext .ts,.tsx .",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "stylelint": "stylelint **/*.scss",
+    "stylelint:fix": "stylelint **/*.scss --fix"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "prettier": "^2.7.1",
+    "stylelint": "^14.14.1",
+    "stylelint-config-standard": "^28.0.0",
+    "stylelint-config-standard-scss": "^6.0.0"
+  }
+}

@@ -1,0 +1,66 @@
+@import "../../../style/abstracts";
+@import "../../../style/variables";
+
+.footerLight {
+  background-color: $primary-bg-color;
+  color: $dark-text-color;
+}
+
+.footerDark {
+  background-color: $dark-bg-color;
+  color: $light-text-color;
+}
+
+.footer {
+  @include flex(row, center, center);
+
+  gap: 50px;
+  padding: 15px 20px;
+  transition:
+    background-color 0.7s ease-in-out,
+    color 0.7s ease-in-out;
+
+  @media (max-width: 600px) {
+    @include flex(column, center, center);
+
+    gap: 10px;
+  }
+
+  .links {
+    @include flex(row, center, center);
+
+    gap: 20px;
+
+    @media (max-width: 600px) {
+      gap: 3px;
+    }
+
+    .link {
+      border-radius: 24px;
+      padding: 5px;
+      transition: background-color 0.5s;
+
+      &:hover {
+        background-color: $hover-color;
+      }
+    }
+  }
+
+  .year {
+    color: $contrast-color;
+
+    @media (max-width: 600px) {
+      order: 1;
+    }
+  }
+
+  .rsLink {
+    width: 60px;
+    filter: saturate(100%) invert(47%) sepia(14%) saturate(2873%) hue-rotate(168deg) brightness(87%);
+    transition: transform 0.5s;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}

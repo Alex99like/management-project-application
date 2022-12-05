@@ -1,0 +1,76 @@
+@import "../../../../../style/variables";
+@import "../../../../../style/abstracts";
+
+.container {
+  position: relative;
+
+  .error {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    color: $red-color;
+    background-color: $pale-red-color;
+    font-size: 8px;
+    top: -13px;
+    right: 5px;
+    padding: 0 6px;
+    border-radius: 20px;
+    z-index: 500;
+  }
+}
+
+.label {
+  position: relative;
+  padding: 7px;
+  box-shadow: 0 0 2px $pale-text-color;
+
+  @include flex(row, center, center);
+
+  border-radius: 10px;
+  transition: 0.3s;
+  color: $pale-text-color;
+  width: 240px;
+  cursor: pointer;
+
+  @media (max-width: 400px) {
+    width: 200px;
+  }
+
+  &:hover {
+    box-shadow: 0 0 2px $contrast-color;
+    color: $contrast-color !important;
+  }
+
+  svg {
+    position: absolute;
+    left: 5px;
+  }
+
+  .placeholder {
+    position: absolute;
+    left: 26px;
+    transition: 0.4s;
+    font-weight: 500;
+    z-index: 10;
+
+    &.focus {
+      font-size: 12px;
+      transform: translate(-10px, -18px);
+      background-color: $secondary-bg-color;
+      font-weight: 500;
+    }
+  }
+
+  .input {
+    outline: none;
+    border: none;
+    width: 90%;
+    left: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    color: $pale-text-color;
+    position: relative;
+    cursor: pointer;
+  }
+}
